@@ -7,6 +7,7 @@ import Images from './Multimedia/Images'
 import Audios from './Multimedia/Audios'
 import { memo } from 'react'
 import AgentThinkingLoader from './AgentThinkingLoader'
+import AgentStepsBlock from './AgentStepsBlock'
 
 interface MessageProps {
   message: ChatMessage
@@ -29,6 +30,9 @@ const AgentMessage = ({ message }: MessageProps) => {
   } else if (message.content) {
     messageContent = (
       <div className="flex w-full flex-col gap-4">
+        {message.tool_calls && message.tool_calls.length > 0 && (
+          <AgentStepsBlock toolCalls={message.tool_calls} />
+        )}
         <MarkdownRenderer>{message.content}</MarkdownRenderer>
         {message.videos && message.videos.length > 0 && (
           <Videos videos={message.videos} />
